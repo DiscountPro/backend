@@ -5,6 +5,6 @@ import com.discount_pro.web_service.profiles.interfaces.rest.resources.CreatePro
 
 public class CreateProfileCommandFromResourceAssembler {
     public static CreateProfileCommand toCommandFromResource(CreateProfileResource resource) {
-        return new CreateProfileCommand(resource.ruc(), resource.razonSocial(), resource.role());
+        return new CreateProfileCommand(resource.ruc(), resource.razonSocial(), resource.role(), resource.userId());
     }
 }
