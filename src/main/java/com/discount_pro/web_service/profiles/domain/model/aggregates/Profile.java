@@ -1,7 +1,7 @@
 package com.discount_pro.web_service.profiles.domain.model.aggregates;
 import com.discount_pro.web_service.profiles.domain.model.commands.CreateProfileCommand;
-import com.discount_pro.web_service.profiles.domain.model.valueobjects.IamId;
 import com.discount_pro.web_service.profiles.domain.model.valueobjects.Role;
+import com.discount_pro.web_service.profiles.domain.model.valueobjects.UserId;
 import com.discount_pro.web_service.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -32,32 +32,28 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
     @Column(name="role",nullable = false)
     private Role role;
     //IAM_id int
-    /*@Embedded
+    //@OneToOne(fetch = FetchType.EAGER)
+    //@JoinColumn(name = "user_id", referencedColumnName = "id")
+    @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "iamId", column = @Column(name = "iam_id", nullable = false))
+            @AttributeOverride(name = "userId", column = @Column(name = "user_id", nullable = false))
     })
-    private IamId iamId;*/
+    private UserId userId;
 
 
     public Profile() { }
-    /*public Profile(Long iamId){
-        this();
-        this.iamId=new IamId(iamId);
-    }
-    public Profile(IamId iamId){
-        this();
-        this.iamId=iamId;
-    }*/
+
 
     public Profile(CreateProfileCommand command) {
         this.ruc = command.RUC();
         this.razonSocial = command.razonSocial();
         this.role = command.role();
+        this.userId = command.userId();
     }
 
-    /*public Long getIamId(){
-        return iamId.iamId();
-    }*/
+    public Long getUserId(){
+        return userId.userId();
+    }
 
     public Profile(String ruc, String razonSocial, Role role){
         this.ruc=ruc;
@@ -71,4 +67,5 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
         this.razonSocial = razonSocial;
         this.role = role;
     }
+
 }
