@@ -56,6 +56,7 @@ public class ProfilesController {
         var optionalProfile = this.profileQueryService.handle(getProfileByIdQuery);
 
         var profileResource = ProfileResourceFromEntityAssembler.toResourceFromEntity(optionalProfile.get());
+
         return new ResponseEntity<>(profileResource, HttpStatus.CREATED);
     }
     @GetMapping

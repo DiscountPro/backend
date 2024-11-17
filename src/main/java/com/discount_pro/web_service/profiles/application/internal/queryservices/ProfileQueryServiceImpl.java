@@ -1,10 +1,7 @@
 package com.discount_pro.web_service.profiles.application.internal.queryservices;
 
 import com.discount_pro.web_service.profiles.domain.model.aggregates.Profile;
-import com.discount_pro.web_service.profiles.domain.model.queries.GetAllProfilesQuery;
-import com.discount_pro.web_service.profiles.domain.model.queries.GetProfileByIdQuery;
-import com.discount_pro.web_service.profiles.domain.model.queries.GetProfileByRazonSocialQuery;
-import com.discount_pro.web_service.profiles.domain.model.queries.GetProfileByRoleQuery;
+import com.discount_pro.web_service.profiles.domain.model.queries.*;
 import com.discount_pro.web_service.profiles.domain.services.ProfileQueryService;
 import com.discount_pro.web_service.profiles.infrastructure.persistence.jpa.repositories.ProfileRepository;
 import org.springframework.stereotype.Service;
@@ -39,5 +36,10 @@ public class ProfileQueryServiceImpl implements ProfileQueryService {
     @Override
     public Optional<Profile> handle(GetProfileByRazonSocialQuery query) {
         return this.profileRepository.findByRazonSocial(query.razonSocial());
+    }
+
+    @Override
+    public Optional<Profile> handle(GetProfileByUserIdQuery query) {
+        return this.profileRepository.findByUserId(query.userId());
     }
 }
