@@ -1,11 +1,9 @@
 package com.discount_pro.web_service.profiles.interfaces.rest;
 
 import com.discount_pro.web_service.profiles.domain.model.commands.DeleteProfileCommand;
-import com.discount_pro.web_service.profiles.domain.model.queries.GetAllProfilesQuery;
-import com.discount_pro.web_service.profiles.domain.model.queries.GetProfileByIdQuery;
-import com.discount_pro.web_service.profiles.domain.model.queries.GetProfileByRazonSocialQuery;
-import com.discount_pro.web_service.profiles.domain.model.queries.GetProfileByRoleQuery;
+import com.discount_pro.web_service.profiles.domain.model.queries.*;
 import com.discount_pro.web_service.profiles.domain.model.valueobjects.Role;
+import com.discount_pro.web_service.profiles.domain.model.valueobjects.UserId;
 import com.discount_pro.web_service.profiles.domain.services.ProfileCommandService;
 import com.discount_pro.web_service.profiles.domain.services.ProfileQueryService;
 import com.discount_pro.web_service.profiles.interfaces.rest.resources.CreateProfileResource;
@@ -119,5 +117,16 @@ public class ProfilesController {
                 .map(ProfileResourceFromEntityAssembler::toResourceFromEntity)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(profileResources);
+    }
+    @GetMapping("/user_id/{userId}")
+    public ResponseEntity<ProfileResource> getProfileByUserId(@PathVariable Long userId) {
+        UserId userIdValue = new UserId(userId);
+        var getProfileByUserIdQuery = new GetProfileByUserIdQuery(userIdValue);
+        var optionalProfile = this.profileQueryService.handle(getProfileByUserIdQuery);
+        if (optionalProfile.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var profileResource = ProfileResourceFromEntityAssembler.toResourceFromEntity(optionalProfile.get());
+        return ResponseEntity.ok(profileResource);
     }
 }
