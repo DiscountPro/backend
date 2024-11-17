@@ -15,8 +15,10 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
 
     private final ProfileRepository profileRepository;
 
+
     public ProfileCommandServiceImpl(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
+
     }
 
 
@@ -25,6 +27,10 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
         var razonsocial = command.razonSocial();
         if (this.profileRepository.existsByRazonSocial(razonsocial)) {
             throw new IllegalArgumentException("Profile with razon social " + razonsocial + " already exists");
+        }
+        var ruc = command.RUC();
+        if (this.profileRepository.existsByRuc(ruc)) {
+            throw new IllegalArgumentException("Profile with ruc " + ruc + " already exists");
         }
         var profile = new Profile(command);
         try{
