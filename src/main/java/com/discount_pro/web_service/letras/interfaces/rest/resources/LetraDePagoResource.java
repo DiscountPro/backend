@@ -19,4 +19,6 @@ public record LetraDePagoResource(
         int clienteId,
         int gastosLetrasId,
         int serial) {
+
+
 }
