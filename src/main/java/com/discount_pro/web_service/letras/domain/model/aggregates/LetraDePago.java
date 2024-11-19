@@ -4,9 +4,12 @@ import com.discount_pro.web_service.letras.domain.model.valueobjects.TipoMoneda;
 import com.discount_pro.web_service.letras.domain.model.valueobjects.TipoTasaInteres;
 import com.discount_pro.web_service.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
+import lombok.Getter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Getter
 @Entity
 public class LetraDePago extends AuditableAbstractAggregateRoot<LetraDePago> {
     @Enumerated(EnumType.STRING)
