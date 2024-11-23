@@ -46,7 +46,7 @@ public class LetraDePagoController {
 
     @GetMapping
     public ResponseEntity<List<LetraDePagoResource>> getAllLetrasDePago(@RequestParam Role userRole) {
-        if (userRole != Role.ENTIDAD_BANCARIA) {
+        if (userRole != Role.BANK) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         var getAllLetrasDePagoQuery = new GetAllLetrasDePagoQuery();
@@ -59,7 +59,7 @@ public class LetraDePagoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<LetraDePagoResource> getLetraDePagoById(@PathVariable int id, @RequestParam Role userRole) {
-        if (userRole != Role.ENTIDAD_BANCARIA && userRole != Role.CLIENTE) {
+        if (userRole != Role.BANK && userRole != Role.CLIENT) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         var getLetraDePagoByIdQuery = new GetLetraDePagoByIdQuery(id);
@@ -73,7 +73,7 @@ public class LetraDePagoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<LetraDePagoResource> updateLetraDePago(@PathVariable int id, @RequestBody UpdateLetraDePagoResource resource, @RequestParam Role userRole) {
-        if (userRole != Role.ENTIDAD_BANCARIA) {
+        if (userRole != Role.BANK) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         var updateLetraDePagoCommand = UpdateLetraDePagoCommandFromResourceAssembler.toCommandFromResource(id, resource);
@@ -87,7 +87,7 @@ public class LetraDePagoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteLetraDePago(@PathVariable int id, @RequestParam Role userRole) {
-        if (userRole != Role.ENTIDAD_BANCARIA) {
+        if (userRole != Role.BANK) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         var deleteLetraDePagoCommand = new DeleteLetraDePagoCommand(id);
@@ -97,7 +97,7 @@ public class LetraDePagoController {
 
     @GetMapping("/propietario/{propietarioId}")
     public ResponseEntity<List<LetraDePagoResource>> getLetrasDePagoByPropietarioId(@PathVariable int propietarioId, @RequestParam Role userRole) {
-        if (userRole != Role.ENTIDAD_BANCARIA && userRole != Role.CLIENTE) {
+        if (userRole != Role.BANK && userRole != Role.CLIENT) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         var getLetrasDePagoByPropietarioIdQuery = new GetLetrasDePagoByPropietarioIdQuery(propietarioId);
@@ -110,7 +110,7 @@ public class LetraDePagoController {
 
     @GetMapping("/cliente/{clienteId}")
     public ResponseEntity<List<LetraDePagoResource>> getLetrasDePagoByClienteId(@PathVariable int clienteId, @RequestParam Role userRole) {
-        if (userRole != Role.ENTIDAD_BANCARIA && userRole != Role.CLIENTE) {
+        if (userRole != Role.BANK && userRole != Role.CLIENT) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         var getLetrasDePagoByClienteIdQuery = new GetLetrasDePagoByClienteIdQuery(clienteId);
