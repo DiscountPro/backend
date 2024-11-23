@@ -14,6 +14,20 @@ import lombok.Getter;
 @Table(name = "profiles")
 public class Profile extends AuditableAbstractAggregateRoot<Profile> {
 
+
+    @Getter
+    @NotNull
+    @NotBlank
+    @Column(name="user_name", length=50, nullable=false)
+    private String userName;
+
+
+    @Getter
+    @NotNull
+    @NotBlank
+    @Column(name="password", length=50, nullable=false)
+    private String password;
+
     @Getter
     @NotNull
     @NotBlank
@@ -44,21 +58,19 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
     public Profile() { }
 
 
-    public Profile(CreateProfileCommand command) {
-        this.ruc = command.RUC();
-        this.razonSocial = command.razonSocial();
-        this.role = command.role();
-        this.userId = command.userId();
-    }
+
 
     public Long getUserId(){
         return userId.userId();
     }
 
-    public Profile(String ruc, String razonSocial, Role role){
+    public Profile(String userName,String password,String ruc, String razonSocial, Role role, Long userId) {
+        this.userName = userName;
+        this.password = password;
         this.ruc=ruc;
         this.razonSocial=razonSocial;
         this.role=role;
+        this.userId = new UserId(userId);
     }
 
 
