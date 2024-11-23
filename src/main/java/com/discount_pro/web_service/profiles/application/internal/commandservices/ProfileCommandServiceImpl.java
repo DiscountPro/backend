@@ -38,7 +38,7 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
         if (this.profileRepository.existsByRuc(ruc)) {
             throw new IllegalArgumentException("Profile with ruc " + ruc + " already exists");
         }
-        var profile = new Profile(command.userName(),command.password(),command.RUC(),command.razonSocial(),command.role(),userId);
+        var profile = new Profile(command.RUC(),command.razonSocial(),command.role(),userId);
         try{
             this.profileRepository.save(profile);
         }catch (Exception e){
@@ -51,6 +51,10 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
     public Optional<Profile> handle(UpdateProfileCommand command) {
         var profileId = command.profileId();
         var razonsocial = command.razonSocial();
+        var ruc=command.ruc();
+        if (this.profileRepository.existsByRucAndIdIsNot(ruc,profileId)){
+            throw new IllegalArgumentException("Profile with RUC " + ruc + " already exists");
+        }
         if (this.profileRepository.existsByRazonSocialAndIdIsNot(razonsocial, profileId)) {
             throw new IllegalArgumentException("Profile with razon social " + razonsocial + " already exists");
         }
