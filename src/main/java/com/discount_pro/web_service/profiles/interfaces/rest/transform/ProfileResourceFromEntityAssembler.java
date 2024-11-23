@@ -9,6 +9,6 @@ public class ProfileResourceFromEntityAssembler {
         var userId = new UserId(entity.getUserId());
         // UserId userId = new UserId(entity.getUserId());
         //var userId = entity.getUserId();
-        return new ProfileResource(entity.getId(),entity.getUserName(), entity.getPassword(), entity.getRuc(), entity.getRazonSocial(), entity.getRole(),userId);
+        return new ProfileResource(entity.getId(), entity.getRuc(), entity.getRazonSocial(), entity.getRole(),userId);
     }
 }
