@@ -18,13 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +33,7 @@ public class ProfilesController {
         this.profileQueryService = profileQueryService;
         this.profileCommandService = profileCommandService;
     }
+
     @PostMapping
     public ResponseEntity<ProfileResource> createProfile(@RequestBody CreateProfileResource resource) {
         var createProfileCommand = CreateProfileCommandFromResourceAssembler
