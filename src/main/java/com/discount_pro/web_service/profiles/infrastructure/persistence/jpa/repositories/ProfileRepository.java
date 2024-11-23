@@ -14,6 +14,7 @@ public interface ProfileRepository extends JpaRepository<Profile,Long> {
     boolean existsByRazonSocial(String razonSocial);
     boolean existsByRazonSocialAndIdIsNot(String razonSocial, Long id);
     boolean existsByRuc(String RUC);
+    boolean existsByRucAndIdIsNot(String ruc,Long id);
     Optional<Profile> findByRazonSocial(String razonSocial);
     List<Profile> findByRole(Role role);
     Optional<Profile> findByUserId(UserId userId);
