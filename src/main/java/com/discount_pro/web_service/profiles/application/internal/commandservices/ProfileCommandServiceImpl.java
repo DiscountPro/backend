@@ -1,5 +1,6 @@
 package com.discount_pro.web_service.profiles.application.internal.commandservices;
 
+import com.discount_pro.web_service.profiles.application.internal.outboundservices.acl.ExternalIamService;
 import com.discount_pro.web_service.profiles.domain.model.aggregates.Profile;
 import com.discount_pro.web_service.profiles.domain.model.commands.CreateProfileCommand;
 import com.discount_pro.web_service.profiles.domain.model.commands.DeleteProfileCommand;
@@ -14,16 +15,21 @@ import java.util.Optional;
 public class ProfileCommandServiceImpl implements ProfileCommandService {
 
     private final ProfileRepository profileRepository;
+    private final ExternalIamService externalIamService;
 
 
-    public ProfileCommandServiceImpl(ProfileRepository profileRepository) {
+    public ProfileCommandServiceImpl(ProfileRepository profileRepository, ExternalIamService externalIamService) {
         this.profileRepository = profileRepository;
-
+        this.externalIamService = externalIamService;
     }
 
 
     @Override
     public Long handle(CreateProfileCommand command) {
+        String role="ROLE_USER";
+
+        var userId = externalIamService.createUser(command.userName(), command.password(),role);
+
         var razonsocial = command.razonSocial();
         if (this.profileRepository.existsByRazonSocial(razonsocial)) {
             throw new IllegalArgumentException("Profile with razon social " + razonsocial + " already exists");
@@ -32,7 +38,7 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
         if (this.profileRepository.existsByRuc(ruc)) {
             throw new IllegalArgumentException("Profile with ruc " + ruc + " already exists");
         }
-        var profile = new Profile(command);
+        var profile = new Profile(command.userName(),command.password(),command.RUC(),command.razonSocial(),command.role(),userId);
         try{
             this.profileRepository.save(profile);
         }catch (Exception e){
