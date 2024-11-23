@@ -1,6 +1,6 @@
 package com.discount_pro.web_service.iam.domain.model.aggregates;
 
-import com.discount_pro.web_service.profiles.domain.model.aggregates.Profile;
+//import com.discount_pro.web_service.profiles.domain.model.aggregates.Profile;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -22,6 +22,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Table(name = "users")
 public class User extends AuditableAbstractAggregateRoot<User> {
 
   /*@OneToOne(mappedBy ="user",cascade = CascadeType.ALL)
